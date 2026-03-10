@@ -3,3 +3,7 @@ npm init -y
 npm i express
 npm i ejs
 npm i mongoose
+
+then we started off with the basic setup of app,js
+connecting mongoose express localhost etc
+then i switched to taking lectures
