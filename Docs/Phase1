@@ -6,4 +6,29 @@ npm i mongoose
 
 then we started off with the basic setup of app,js
 connecting mongoose express localhost etc
-then i switched to taking lectures
+
+Phase1(10 march): 
+
+Model 1: Listing(place- aparetment, flat, house etc)
+title
+description
+image
+price
+location
+country
+
+create models folder
+create listing.js-> model and listing
+
+
+in listing we are defining the schema, what is the type and other
+props of a particular entry
+
+then we used ternary operator to set the value of image urlf
+
+then in app.js, we made the get request for /testListing
+make sure you do module.exports, no typo
+
+use mongosh, then you will see that wanderlust db is made
+//i stopped here
+
