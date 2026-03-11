@@ -32,3 +32,10 @@ make sure you do module.exports, no typo
 use mongosh, then you will see that wanderlust db is made
 //i stopped here
 
+now we are going to initialize the database
+make init folder, then make data.js and copy paste the data from apna college website
+
+now we made index.js, there we did basic setup like 
+require mongoose, data.js, listing.js, mongourl, then main try catch
+
+then we made async function main to connect mongo url
