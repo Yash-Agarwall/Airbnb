@@ -350,4 +350,5 @@ const sampleListings = [
 ];
 
 //we are exporting this data in the form of an object
+//the key is data, and the value is sampleListings
 module.exports = { data: sampleListings };

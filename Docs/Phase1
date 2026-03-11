@@ -39,3 +39,13 @@ now we made index.js, there we did basic setup like
 require mongoose, data.js, listing.js, mongourl, then main try catch
 
 then we made async function main to connect mongo url
+in that async function we first deleted the old sata(if any)
+then we inserted the initData.data value, then we called the initDB function
+
+now do nodemon index.js, then mongosh and use wanderlust, then do 
+db.listings.find()
+
+NOW WE WILL START WITH CRUD OPERATIONS
+
+index route: get-> /listings-> all listings
+come to app.js: 
