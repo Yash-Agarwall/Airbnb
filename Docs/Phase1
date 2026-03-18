@@ -48,4 +48,10 @@ db.listings.find()
 NOW WE WILL START WITH CRUD OPERATIONS
 
 index route: get-> /listings-> all listings
-come to app.js: 
+come to app.js: make et request and get data form db, since we want to render it in ejs
+so it will be better to use await asnyc to avoid callback hell of then catch
+to render ejs we need to require it also
+
+now we made a listings folder in views and then index.ejs inside it
+now require view engine in app.js and set the path to s=render this index.ejs
+
