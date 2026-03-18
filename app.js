@@ -55,9 +55,18 @@ app.get("/listings/:id", async (req,res)=>{
     let {id}=req.params;
     const listing=await Listing.findById(id);
     res.render("listings/show",{listing});
-})
+});
 
-
+//create route
+app.post("/listings", async (req,res) => {
+    // let {title, description, image, price, country, location} = req.body;-> this is one way of passin, but we woul be using the listing[title] in the .ejs itself
+    // let listing= req.body.listing;-> we do not do this, we create a new js obj
+    //this will give us a new instance of an object with the fields entered by the user
+    const newListing=new Listing(req.body.listing);
+    await newListing.save();
+    res.redirect("/listings");
+    // console.log(listing);
+});
 // app.get("/testListing", async (req,res)=>{
 //     let sampleListing= new Listing({
 //         title: "My new villa",
