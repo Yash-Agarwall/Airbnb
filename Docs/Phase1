@@ -57,3 +57,15 @@ now require view engine in app.js and set the path to s=render this index.ejs
 
 now comes the important step.........we showed the data of allListings in the index.ejs
 using for loop and anchor tag, each link will lead to a specific page
+
+
+2nd route: show route
+get-> listings/:id
+
+so in show.ejs we have passed the data of a particular listing by using findByID
+and we are displaying that in show.ejs, this route is rendered in app.js
+
+now we want to display the price in indian standard format
+1- use the hex code of rupee entity
+2- use .toLocaleString("en-IN");
+
