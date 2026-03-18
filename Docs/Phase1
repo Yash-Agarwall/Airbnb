@@ -55,3 +55,5 @@ to render ejs we need to require it also
 now we made a listings folder in views and then index.ejs inside it
 now require view engine in app.js and set the path to s=render this index.ejs
 
+now comes the important step.........we showed the data of allListings in the index.ejs
+using for loop and anchor tag, each link will lead to a specific page
