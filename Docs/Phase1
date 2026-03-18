@@ -69,3 +69,11 @@ now we want to display the price in indian standard format
 1- use the hex code of rupee entity
 2- use .toLocaleString("en-IN");
 
+3rd route: new (this gives a form to create a new listing)
+4th: create(this will let us create a new listing)
+
+so first we are working on the new route
+make the new.ejs file and do basic form setup, then render this in app.js
+-> while rendering we ahve to make sure that we keep the new route above
+the show route else /new will be conflicted with /:id 
+and no id named new would be found, do error

@@ -45,12 +45,18 @@ app.get("/listings",async (req,res)=>{
     res.render("listings/index",{allListings});
 });
 
+//new route
+app.get("/listings/new",(req,res)=>{
+    res.render("listings/new")
+})
+
 //show route
 app.get("/listings/:id", async (req,res)=>{
     let {id}=req.params;
     const listing=await Listing.findById(id);
     res.render("listings/show",{listing});
 })
+
 
 // app.get("/testListing", async (req,res)=>{
 //     let sampleListing= new Listing({
