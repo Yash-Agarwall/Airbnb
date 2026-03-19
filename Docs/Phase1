@@ -88,3 +88,6 @@ then save this in the db and redirect the user to the /listings page
 get-> /listings/:id/edit(edit form opens and give option of submit)-> use method override
 put-> /istings/:id
 
+6th route: delete route
+make the delete route in app.js and add delete form in show.ejs, mkae 
+sure you use delete method override in form action
