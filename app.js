@@ -3,6 +3,7 @@ const app=express();
 const mongoose=require("mongoose");
 const Listing = require("./models/listing.js");
 const path= require("path");
+const methodOverride=require("method-override");
 
 //write an async function for database
 const MONGO_URL="mongodb://127.0.0.1:27017/wanderlust";
@@ -21,9 +22,9 @@ async function main(){
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.use(express.urlencoded({extended:true}));
+app.use(methodOverride("_method"));
 
 let port=8080;
-
 app.listen(port,()=>{
     console.log(`Server is listening on port ${port}`);
 })
@@ -67,6 +68,21 @@ app.post("/listings", async (req,res) => {
     res.redirect("/listings");
     // console.log(listing);
 });
+
+//Edit route
+app.get("/listings/:id/edit", async(req,res)=>{
+    let {id}=req.params;
+    const listing= await Listing.findById(id);
+    console.log(listing);
+    res.render("listings/edit",{listing});
+})
+
+//update route
+app.put("/listings/:id", async(req,res)=>{
+    let {id}=req.params;
+    await Listing.findByIdAndUpdate(id, {...req.body.listing});
+    res.redirect(`/listings/${id}`);
+})
 // app.get("/testListing", async (req,res)=>{
 //     let sampleListing= new Listing({
 //         title: "My new villa",

@@ -77,3 +77,14 @@ make the new.ejs file and do basic form setup, then render this in app.js
 -> while rendering we ahve to make sure that we keep the new route above
 the show route else /new will be conflicted with /:id 
 and no id named new would be found, do error
+
+Now we move onto create route
+create a post route at /listings, define a new object instance there
+with await newListing= new Listing();
+then save this in the db and redirect the user to the /listings page
+
+
+5th : update route
+get-> /listings/:id/edit(edit form opens and give option of submit)-> use method override
+put-> /istings/:id
+
