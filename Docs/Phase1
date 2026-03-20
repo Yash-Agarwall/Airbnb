@@ -111,3 +111,6 @@ app.set("view engine", "ejs");
 Navbar: use bootstrap official website code
 <% layout("layouts/boilerplate") %>-> write this at the top of each page, after making the navbar in includes folder
 
+we made basic frontend, which you can do easily, we arae using some 
+bootstrap classes
+sticky-top-> to fix the navbar

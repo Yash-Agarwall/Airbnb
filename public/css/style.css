@@ -8,5 +8,15 @@
 }
 
 .navbar{
-    height:5rem
+    height:4rem;
+    background-color: white;
+}
+
+.fa-compass{
+    color: #fe424d;
+    size: 2rem;
+}
+.nav-link{
+    /* this important is to ensure that property by boilerplate/bootstrap overriden */
+    color: #222222 !important;
 }
