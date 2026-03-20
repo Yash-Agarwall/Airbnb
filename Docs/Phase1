@@ -117,5 +117,13 @@ sticky-top-> to fix the navbar
 
 Most important thing is how we are procedding while doing decomposition
 0- made boilerplate in layouts folder-> this consists of all componenets like navbar and footer and then this is includes in all the .ejs files
+
 1- made includes folder inside views-> consists of navbar,footer etc
 2- made public: consists of css folder
+
+Now after eader and footerm we are styling the index.ejs page(which shows all the list)->
+pick up the card from bootstrap and modify it, used a google font also
+now we will put every card inside an anchor tag so it redirects
+
+navbar aur footer: bootsrap se uthaaye aur modify
+lists: initially they were just simple list itmes, we added bootsrap card to each li and put them inside anchor tag

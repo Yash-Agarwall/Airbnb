@@ -1,6 +1,6 @@
-/* body {
-  background-color: #f8f9fa;
-} */
+body {
+   font-family: "Plus Jakarta Sans", sans-serif !important;
+}
 
 .container {
   margin-top: 2rem;
@@ -21,6 +21,8 @@
   color: #222222 !important;
 }
 
+
+/* Footer */
 .f-info-links a {
   text-decoration: underline;
   color: #222222;
@@ -78,4 +80,39 @@ footer {
 .f-info-links a:hover {
   color: #fe424d;
   text-decoration: underline;
+}
+
+/* cards */
+.card{
+    border:none !important;
+    margin-bottom: 2rem;
+    
+}
+
+.card-img-top{
+    border-radius: 1rem !important;
+    width: 100% !important;
+    object-fit: cover !important;
+}
+
+.card-body{
+    padding: 0 !important;
+
+}
+
+.card-text{
+    font-weight: 400;
+}
+
+.listing-link{
+    text-decoration: none;
+}
+
+/* Card effect */
+.card-img-overlay{
+    opacity: 0;
+}
+.card-img-overlay:hover{
+    opacity: 0.2;
+    background-color: white;
 }
