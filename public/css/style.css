@@ -35,8 +35,10 @@ footer {
 }
 
 .f-info {
+    height: 8rem;
   display: flex;
-  justify-content: space-around;
+  flex-wrap: wrap;
+  justify-content: center;
   align-items: center;
   gap: 2rem;
   text-align: center;
@@ -46,6 +48,8 @@ footer {
   display: flex;
   gap: 1rem;
   font-size: 1.5rem;
+  width: 100%;
+  justify-content: center;
 }
 
 .f-info-socials i {
@@ -54,13 +58,14 @@ footer {
 }
 
 .f-info-socials i:hover {
-  color: #fe424d;
+  color: #3c99f7;
 }
 
 .f-info-links {
   display: flex;
   gap: 1.5rem;
   justify-content: center;
+  width: 100%;
 }
 
 .f-info-links a {
