@@ -7,16 +7,70 @@
   margin-bottom: 2rem;
 }
 
-.navbar{
-    height:4rem;
-    background-color: white;
+.navbar {
+  height: 4rem;
+  background-color: white;
 }
 
-.fa-compass{
-    color: #fe424d;
-    size: 2rem;
+.fa-compass {
+  color: #fe424d;
+  size: 2rem;
 }
-.nav-link{
-    /* this important is to ensure that property by boilerplate/bootstrap overriden */
-    color: #222222 !important;
+.nav-link {
+  /* this important is to ensure that property by boilerplate/bootstrap overriden */
+  color: #222222 !important;
+}
+
+.f-info-links a {
+  text-decoration: underline;
+  color: #222222;
+}
+
+footer {
+  background-color: #222222;
+  color: white;
+  padding: 2rem 1rem;
+  margin-top: 3rem;
+  border-top: 2px solid #ddd;
+}
+
+.f-info {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 2rem;
+  text-align: center;
+}
+
+.f-info-socials {
+  display: flex;
+  gap: 1rem;
+  font-size: 1.5rem;
+}
+
+.f-info-socials i {
+  color: white;
+  transition: color 0.3s ease;
+}
+
+.f-info-socials i:hover {
+  color: #fe424d;
+}
+
+.f-info-links {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+}
+
+.f-info-links a {
+  color: white;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: color 0.3s ease;
+}
+
+.f-info-links a:hover {
+  color: #fe424d;
+  text-decoration: underline;
 }

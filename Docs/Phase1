@@ -114,3 +114,8 @@ Navbar: use bootstrap official website code
 we made basic frontend, which you can do easily, we arae using some 
 bootstrap classes
 sticky-top-> to fix the navbar
+
+Most important thing is how we are procedding while doing decomposition
+0- made boilerplate in layouts folder-> this consists of all componenets like navbar and footer and then this is includes in all the .ejs files
+1- made includes folder inside views-> consists of navbar,footer etc
+2- made public: consists of css folder
