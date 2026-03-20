@@ -1,20 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wanderlust</title>
-</head>
-<body>
-    <h1>All listings</h1>
-    <form method="GET" action="/listings/new">
-        <button>
-        Create new Listing
-    </button></form>
-    <ul>
-        <% for(let listing of allListings){ %>
-            <li><a href="/listings/<%= listing._id %>"><%= listing.title %></a> </li>
-        <% } %>
-    </ul>
-</body>
-</html>
+<% layout("layouts/boilerplate") %>
+
+<h1 class="mb-4">All Listings</h1>
+
+<!-- <form method="GET" action="/listings/new" class="mb-4">
+    <button class="btn btn-dark">Create New Listing</button>
+</form> -->
+
+<ul class="list-group">
+    <% for (let listing of allListings) { %>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            <a href="/listings/<%= listing._id %>"><%= listing.title %></a>
+            <span class="text-muted"><%= listing.location %>, <%= listing.country %></span>
+        </li>
+    <% } %>
+</ul>

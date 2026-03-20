@@ -8,6 +8,9 @@ const methodOverride=require("method-override");
 //write an async function for database
 const MONGO_URL="mongodb://127.0.0.1:27017/wanderlust";
 
+const engine = require("ejs-mate");
+app.engine("ejs", engine);
+
 main().then(()=>{
     console.log("Connect to db");
 })
@@ -21,6 +24,7 @@ async function main(){
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
+app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({extended:true}));
 app.use(methodOverride("_method"));
 

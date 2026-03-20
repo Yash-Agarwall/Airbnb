@@ -91,3 +91,23 @@ put-> /istings/:id
 6th route: delete route
 make the delete route in app.js and add delete form in show.ejs, mkae 
 sure you use delete method override in form action
+
+
+Lecture2: now we will style the website
+
+make public/css/style.css
+make layouts/boilerplate.ejs
+
+do npm i ejs-mate
+in boilerplate, we have <%- body %>-> this is where our body will be injected
+do: 
+app.use(express.static(path.join(__dirname, "public")));
+const engine = require("ejs-mate");
+
+app.engine("ejs", engine);
+app.set("view engine", "ejs");
+
+
+Navbar: use bootstrap official website code
+<% layout("layouts/boilerplate") %>-> write this at the top of each page, after making the navbar in includes folder
+
