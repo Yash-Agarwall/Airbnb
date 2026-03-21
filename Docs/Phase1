@@ -127,3 +127,5 @@ now we will put every card inside an anchor tag so it redirects
 
 navbar aur footer: bootsrap se uthaaye aur modify
 lists: initially they were just simple list itmes, we added bootsrap card to each li and put them inside anchor tag
+
+then we updated ui of edit and new.ejs page(very simple)
