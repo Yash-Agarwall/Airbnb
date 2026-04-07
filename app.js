@@ -1,10 +1,10 @@
 const express=require("express");
 const app=express();
 const mongoose=require("mongoose");
-const Listing = require("./models/listing.js");
 const path= require("path");
 const methodOverride=require("method-override");
 
+const Listing = require("./models/listing.js");
 //write an async function for database
 const MONGO_URL="mongodb://127.0.0.1:27017/wanderlust";
 
@@ -37,11 +37,11 @@ app.get("/",(req,res)=>{
     res.send("hii i am get api");
 })
 
-
 //index route
 app.get("/listings",async (req,res)=>{
     //.find will return a promise, now to send it to ejs file we 
-    //will make the function async coz it prevent callback hell(by mutliple then catch) in case of many things
+    //will make the function async coz it prevent callback hell
+    // (by mutliple then catch) in case of many things
     // Listing.find({}).then((listings) => {
     //     // res.send(listings);
     //     console.log(listings);
@@ -55,22 +55,22 @@ app.get("/listings/new",(req,res)=>{
     res.render("listings/new")
 })
 
-//show route
-app.get("/listings/:id", async (req,res)=>{
-    let {id}=req.params;
-    const listing=await Listing.findById(id);
-    res.render("listings/show",{listing});
-});
-
 //create route
 app.post("/listings", async (req,res) => {
-    // let {title, description, image, price, country, location} = req.body;-> this is one way of passin, but we woul be using the listing[title] in the .ejs itself
+    // let {title, description, image, price, country, location} = req.body;-> this is
+    //  one way of passin, but we woul be using the listing[title] in the .ejs itself
     // let listing= req.body.listing;-> we do not do this, we create a new js obj
     //this will give us a new instance of an object with the fields entered by the user
     const newListing=new Listing(req.body.listing);
     await newListing.save();
     res.redirect("/listings");
-    // console.log(listing);
+});
+
+//show route
+app.get("/listings/:id", async (req,res)=>{
+    let {id}=req.params;
+    const listing=await Listing.findById(id);
+    res.render("listings/show",{listing});
 });
 
 //Edit route
