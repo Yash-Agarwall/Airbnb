@@ -136,3 +136,14 @@ navbar aur footer: bootsrap se uthaaye aur modify
 lists: initially they were just simple list itmes, we added bootsrap card to each li and put them inside anchor tag
 
 then we updated ui of edit and new.ejs page and show.ejs(very simple)-> here only ui was updated, no ejs work
+
+Now we will start with form validations:
+Client side validation, making sure that every necessary entry is filled 
+before form submission, and also the format is ok for every entry
+
+Server side calidation: db/schema error handling
+
+Client side: set things to "required"-> but this is having a 
+default styling which looks different on different sites, so use bootstrap styling
+for that: first set the form to novalidate(so that the default browser stylings are disabled)
+set class of form to needs-validation
