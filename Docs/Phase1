@@ -185,6 +185,21 @@ app.use((err, req, res, next) => {
 
 step 3: add additonal checks like this, for eg making sure postman sends comlete data while testing 
 
-if (!listing) {
+    if (!listing) {
       throw new ExpressError(400, "Send valid listing data");
     }
+
+✅ When to use wrapAsync
+Use it for:
+Async route handlers
+DB calls (mongoose)
+APIs
+
+Example:
+app.post("/listings", wrapAsync(async (req, res) => {
+  ...
+}));
+❌ When NOT needed
+You don’t need it if:
+You’re using try-catch manually
+Route is synchronous

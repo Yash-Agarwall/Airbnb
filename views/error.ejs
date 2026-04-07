@@ -1,0 +1,15 @@
+<% layout("/layouts/boilerplate") %>
+
+<section class="error-shell">
+  <div class="error-card">
+    <p class="error-status">Error <%= err.statusCode || 500 %></p>
+    <h1 class="error-title">
+      <%= err.statusCode === 404 ? "Page not found" : "Something went wrong" %>
+    </h1>
+    
+    <div class="error-actions">
+      <a href="/listings" class="btn btn-dark">Back to Listings</a>
+      <!-- <a href="/" class="btn btn-outline-dark">Go Home</a> -->
+    </div>
+  </div>
+</section>
