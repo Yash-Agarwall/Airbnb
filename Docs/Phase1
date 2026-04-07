@@ -203,3 +203,21 @@ app.post("/listings", wrapAsync(async (req, res) => {
 You don’t need it if:
 You’re using try-catch manually
 Route is synchronous
+
+now we will start validating the schema, one way is the if
+check for each and every thing(hectic),
+another way is the joi
+joi-> used to define a schema for server side validation
+
+const joi= require("joi");
+make schema.js
+module.exports.listingSchema= Joi.object({
+    listing: Joi.object().required()({
+        title: Joi.String().required(),
+        description: Joi.String().required(),
+        country: Joi.String().required(),
+        price: Joi.number().required().min(0),
+        image: Joi.String().allow("",null),
+
+    }).required()
+})

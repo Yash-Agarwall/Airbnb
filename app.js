@@ -8,6 +8,8 @@ const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
 const wrapAsync = require("./utils/wrapAsync.js");
 const ExpressError = require("./utils/ExpressError.js");
 const engine = require("ejs-mate");
+const {listingSchema} = require("./schema.js");
+
 app.engine("ejs", engine);
 
 main()
@@ -50,29 +52,23 @@ app.get("/listings/new", (req, res) => {
 app.post(
   "/listings",
   wrapAsync(async (req, res, next) => {
-    const listing = req.body?.listing;
+    // const listing = req.body?.listing;
 
-    if (!listing) {
-      throw new ExpressError(400, "Send valid listing data");
-    }
+    // if (!listing) {
+    //   throw new ExpressError(400, "Send valid listing data");
+    // }
 
-    const { title, description, price, country, location } = listing;
-    if (
-      !title ||
-      !description ||
-      price === undefined ||
-      price === null ||
-      price === "" ||
-      !country ||
-      !location
-    ) {
-      throw new ExpressError(
-        400,
-        "All required listing fields must be filled out",
-      );
-    }
-
-    const newListing = new Listing(listing);
+    // const { title, description, price, country, location } = listing;
+    // if (!title ||!description ||price === undefined ||price === null ||price === "" ||!country ||!location
+    // ) {
+    //   throw new ExpressError(
+    //     400,
+    //     "All required listing fields must be filled out",
+    //   );
+    // }
+    let result = listingSchema.validate(req.body);
+    console.log(result);
+    const newListing = new Listing(req.body.listing);
     await newListing.save();
     res.redirect("/listings");
   }),
@@ -128,8 +124,7 @@ app.use((req, res, next) => {
 //custom error handler-> this is the actual handler
 app.use((err, req, res, next) => {
   let { statusCode = 500, message = "Something went wrong" } = err;
-//   res.status(statusCode).send(message);
-    res.render('error.ejs',{err});
+  res.status(statusCode).render("error.ejs", { err });
 });
 
 let port = 8080;
