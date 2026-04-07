@@ -182,3 +182,9 @@ app.use((err, req, res, next) => {
   let { statusCode = 500, message = "Something went wrong" } = err;
   res.status(statusCode).send(message);
 });
+
+step 3: add additonal checks like this, for eg making sure postman sends comlete data while testing 
+
+if (!listing) {
+      throw new ExpressError(400, "Send valid listing data");
+    }

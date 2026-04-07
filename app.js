@@ -24,6 +24,7 @@ async function main() {
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.use(express.static(path.join(__dirname, "public")));
+app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 
@@ -49,7 +50,29 @@ app.get("/listings/new", (req, res) => {
 app.post(
   "/listings",
   wrapAsync(async (req, res, next) => {
-    const newListing = new Listing(req.body.listing);
+    const listing = req.body?.listing;
+
+    if (!listing) {
+      throw new ExpressError(400, "Send valid listing data");
+    }
+
+    const { title, description, price, country, location } = listing;
+    if (
+      !title ||
+      !description ||
+      price === undefined ||
+      price === null ||
+      price === "" ||
+      !country ||
+      !location
+    ) {
+      throw new ExpressError(
+        400,
+        "All required listing fields must be filled out",
+      );
+    }
+
+    const newListing = new Listing(listing);
     await newListing.save();
     res.redirect("/listings");
   }),
