@@ -48,14 +48,12 @@ app.get("/listings/new",(req,res)=>{
 })
 
 //create route
-app.post("/listings", async (req,res) => {
-
-    try{
-    const newListing=new Listing(req.body.listing);
-    await newListing.save();
-    res.redirect("/listings");
-    }
-    catch(err){
+app.post("/listings", async (req,res,next) => {
+    try {
+        const newListing = new Listing(req.body.listing);
+        await newListing.save();
+        res.redirect("/listings");
+    } catch (err) {
         next(err);
     }
 });
