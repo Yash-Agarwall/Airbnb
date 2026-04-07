@@ -143,7 +143,26 @@ before form submission, and also the format is ok for every entry
 
 Server side calidation: db/schema error handling
 
-Client side: set things to "required"-> but this is having a 
+Client side:
+
+1- form validation using bootstrap
+
+ set things to "required"-> but this is having a 
 default styling which looks different on different sites, so use bootstrap styling
 for that: first set the form to novalidate(so that the default browser stylings are disabled)
-set class of form to needs-validation
+set class of form to needs-validation, then copy the code from bootstrap/docs/validate...at the bottom
+ans paste in public/js/script.js then use that in the boilerplate
+
+2- success/failure text: use teh invalid-feedback and valid-feedback for a particular div
+eg:
+    <div class="mb-3">
+    <label for="title" class="form-label">Title</label>
+    <input
+        name="listing[title]"
+        type="text"
+        class="form-control"
+        placeholder="Add a catchy title"
+        required
+    />
+    <div class="valid-feedback">Title looks good!</div>
+    </div>

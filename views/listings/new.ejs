@@ -20,6 +20,7 @@
           placeholder="Add a catchy title"
           required
         />
+        <div class="invalid-feedback">Please enter a title</div>
         <div class="valid-feedback">Title looks good!</div>
       </div>
 
@@ -31,8 +32,9 @@
           placeholder="Describe your place"
           rows="4"
           required
-        ></textarea>  
+        ></textarea>
         <div class="invalid-feedback">Please enter a short description</div>
+        <div class="valid-feedback">Description looks good!</div>
       </div>
 
       <div class="mb-3">
@@ -41,9 +43,11 @@
           name="listing[image]"
           type="file"
           class="form-control"
+          accept="image/*"
           required
         />
         <div class="invalid-feedback">Please upload an image</div>
+        <div class="valid-feedback">Image selected successfully</div>
       </div>
 
       <div class="row">
@@ -58,6 +62,7 @@
             required
           />
           <div class="invalid-feedback">Price should be valid</div>
+          <div class="valid-feedback">Price looks good!</div>
         </div>
 
         <div class="mb-3 col-md-8">
@@ -70,6 +75,7 @@
             required
           />
           <div class="invalid-feedback">Country name should be valid</div>
+          <div class="valid-feedback">Country looks good!</div>
         </div>
       </div>
 
@@ -83,6 +89,7 @@
           required
         />
         <div class="invalid-feedback">Location should be valid</div>
+        <div class="valid-feedback">Location looks good!</div>
       </div>
 
       <button class="btn btn-dark my-3 add-btn">Add</button>
