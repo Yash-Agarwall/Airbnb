@@ -8,7 +8,7 @@ const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
 const wrapAsync = require("./utils/wrapAsync.js");
 const ExpressError = require("./utils/ExpressError.js");
 const engine = require("ejs-mate");
-const {listingSchema} = require("./schema.js");
+const { listingSchema } = require("./schema.js");
 
 app.engine("ejs", engine);
 
@@ -34,6 +34,15 @@ app.get("/", (req, res) => {
   res.send("hii i am get api");
 });
 
+const validateListing = (req, res, next) => {
+  let { error } = listingSchema.validate(req.body);
+  if (error) {
+    let errMsg = error.details.map((el) => el.message).join(", ");
+    throw new ExpressError(400, errMsg);
+  } else {
+    next();
+  }
+};
 //index route
 app.get(
   "/listings",
@@ -51,6 +60,7 @@ app.get("/listings/new", (req, res) => {
 //create route
 app.post(
   "/listings",
+  validateListing,
   wrapAsync(async (req, res, next) => {
     // const listing = req.body?.listing;
 
@@ -65,9 +75,12 @@ app.post(
     //     400,
     //     "All required listing fields must be filled out",
     //   );
+    // // }
+    // let result = listingSchema.validate(req.body);
+    // console.log(result);
+    // if (result.error) {
+    //   throw new ExpressError(400, result.error);
     // }
-    let result = listingSchema.validate(req.body);
-    console.log(result);
     const newListing = new Listing(req.body.listing);
     await newListing.save();
     res.redirect("/listings");
@@ -98,6 +111,7 @@ app.get(
 //update route
 app.put(
   "/listings/:id",
+  validateListing,
   wrapAsync(async (req, res) => {
     let { id } = req.params;
     await Listing.findByIdAndUpdate(id, { ...req.body.listing });
