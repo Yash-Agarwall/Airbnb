@@ -3,9 +3,9 @@ const app=express();
 const mongoose=require("mongoose");
 const path= require("path");
 const methodOverride=require("method-override");
-
 const Listing = require("./models/listing.js");
 const MONGO_URL="mongodb://127.0.0.1:27017/wanderlust";
+const wrapAsync = require("./utils/wrapAsync.js");
 
 const engine = require("ejs-mate");
 app.engine("ejs", engine);
@@ -48,15 +48,11 @@ app.get("/listings/new",(req,res)=>{
 })
 
 //create route
-app.post("/listings", async (req,res,next) => {
-    try {
-        const newListing = new Listing(req.body.listing);
-        await newListing.save();
-        res.redirect("/listings");
-    } catch (err) {
-        next(err);
-    }
-});
+app.post("/listings",wrapAsync(async (req,res,next) => {
+    const newListing = new Listing(req.body.listing);
+    await newListing.save();
+    res.redirect("/listings");
+}));
 
 //show route
 app.get("/listings/:id", async (req,res)=>{
