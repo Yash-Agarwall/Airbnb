@@ -1,90 +1,114 @@
-const express=require("express");
-const app=express();
-const mongoose=require("mongoose");
-const path= require("path");
-const methodOverride=require("method-override");
+const express = require("express");
+const app = express();
+const mongoose = require("mongoose");
+const path = require("path");
+const methodOverride = require("method-override");
 const Listing = require("./models/listing.js");
-const MONGO_URL="mongodb://127.0.0.1:27017/wanderlust";
+const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
 const wrapAsync = require("./utils/wrapAsync.js");
-
+const ExpressError = require("./utils/ExpressError.js");
 const engine = require("ejs-mate");
 app.engine("ejs", engine);
 
-main().then(()=>{
+main()
+  .then(() => {
     console.log("Connect to db");
-})
-.catch((err)=>{
+  })
+  .catch((err) => {
     console.log(err);
-})
-async function main(){
-    await mongoose.connect(MONGO_URL);
-     
+  });
+async function main() {
+  await mongoose.connect(MONGO_URL);
 }
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.use(express.static(path.join(__dirname, "public")));
-app.use(express.urlencoded({extended:true}));
+app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 
-let port=8080;
-app.listen(port,()=>{
-    console.log(`Server is listening on port ${port}`);
-})
-
-app.get("/",(req,res)=>{
-    res.send("hii i am get api");
-})
-
-//index route
-app.get("/listings",async (req,res)=>{
-    const allListings = await  Listing.find({});
-    res.render("listings/index",{allListings});
+app.get("/", (req, res) => {
+  res.send("hii i am get api");
 });
 
+//index route
+app.get(
+  "/listings",
+  wrapAsync(async (req, res) => {
+    const allListings = await Listing.find({});
+    res.render("listings/index", { allListings });
+  }),
+);
+
 //new route
-app.get("/listings/new",(req,res)=>{
-    res.render("listings/new")
-})
+app.get("/listings/new", (req, res) => {
+  res.render("listings/new");
+});
 
 //create route
-app.post("/listings",wrapAsync(async (req,res,next) => {
+app.post(
+  "/listings",
+  wrapAsync(async (req, res, next) => {
     const newListing = new Listing(req.body.listing);
     await newListing.save();
     res.redirect("/listings");
-}));
+  }),
+);
 
 //show route
-app.get("/listings/:id", async (req,res)=>{
-    let {id}=req.params;
-    const listing=await Listing.findById(id);
-    res.render("listings/show",{listing});
-});
+app.get(
+  "/listings/:id",
+  wrapAsync(async (req, res) => {
+    let { id } = req.params;
+    const listing = await Listing.findById(id);
+    res.render("listings/show", { listing });
+  }),
+);
 
 //Edit route
-app.get("/listings/:id/edit", async(req,res)=>{
-    let {id}=req.params;
-    const listing= await Listing.findById(id);
+app.get(
+  "/listings/:id/edit",
+  wrapAsync(async (req, res) => {
+    let { id } = req.params;
+    const listing = await Listing.findById(id);
     console.log(listing);
-    res.render("listings/edit",{listing});
-})
+    res.render("listings/edit", { listing });
+  }),
+);
 
 //update route
-app.put("/listings/:id", async(req,res)=>{
-    let {id}=req.params;
-    await Listing.findByIdAndUpdate(id, {...req.body.listing});
+app.put(
+  "/listings/:id",
+  wrapAsync(async (req, res) => {
+    let { id } = req.params;
+    await Listing.findByIdAndUpdate(id, { ...req.body.listing });
     res.redirect(`/listings/${id}`);
-})
+  }),
+);
 
 //delete route
-app.delete("/listings/:id", async (req,res)=>{
-    let {id}=req.params;
-    let deletedListing= await Listing.findByIdAndDelete(id);
+app.delete(
+  "/listings/:id",
+  wrapAsync(async (req, res) => {
+    let { id } = req.params;
+    let deletedListing = await Listing.findByIdAndDelete(id);
     console.log(deletedListing);
     res.redirect("/listings");
-})
+  }),
+);
 
-//custom error handler
-app.use((err, req, res, next) =>{
-    res.send("something went wrong");
-})
+//this is needed to catch the non existent routes, earlier the syntax was app.all but its no longer valid
+app.use((req, res, next) => {
+  next(new ExpressError(404, "Page not found"));
+});
+
+//custom error handler-> this is the actual handler
+app.use((err, req, res, next) => {
+  let { statusCode = 500, message = "Something went wrong" } = err;
+  res.status(statusCode).send(message);
+});
+
+let port = 8080;
+app.listen(port, () => {
+  console.log(`Server is listening on port ${port}`);
+});
