@@ -16,4 +16,22 @@ so once we create the review model schema then we linked
 
  review validation: client side and server side. 
  client side: use no validate in the form etc etc
- 
+
+ now we are working on the deletion of any particular review
+ so, we made a delete req in app,js and a button in show.ejs
+  we cant just simply delete from the reviews model, we also need to 
+  delete from the listing model, for that we will find by id and 
+  then use a special operator called $pull operator
+
+  $pull-> removes from an existing array all instances of a value
+  or values that match a specified condtion
+
+  now we are going to handle one thing that is when we 
+  delete an entire listing then right now the data is not
+  being deleted from the reviews model(meaning that the 
+  review model is still having the review od the delted listing)
+  ------the best way to do this is using a post mongoose middleware in the listing.js
+cose: 
+  listingSchema.post("findOneAndDelete", async (listing) =>{
+    await Review.deleteMany({_id: {$in: listing.reviews}});
+})

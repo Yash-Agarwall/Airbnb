@@ -143,7 +143,8 @@ app.delete(
 );
 
 //phase 2
-//review route
+//reviews
+// post review route
 app.post(
   "/listings/:id/reviews",
   validateReview,
@@ -157,6 +158,17 @@ app.post(
     res.redirect(`/listings/${listing._id}`);
   }),
 );
+
+//delete review route
+app.delete("/listings/:id/reviews/:reviewId",wrapAsync(async (req,res) =>{
+  let {id, reviewId} = req.params;
+  //we will need to delete the review from the listings model also
+  await Listing.findByIdAndUpdate(id, {$pull: {reviews: reviewId}});
+  //this will delete from the review model only
+  await Review.findByIdAndDelete(reviewId);
+
+  res.redirect(`/listings/${id}`);
+}))
 
 //this is needed to catch the non existent routes, earlier the syntax was app.all but its no longer valid
 app.use((req, res, next) => {

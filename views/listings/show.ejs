@@ -64,6 +64,9 @@
               <span class="review-score"><%= review.rating %>/5</span>
             </div>
             <p class="review-comment mb-0"><%= review.comment %></p>
+            <form action="/listings/<%= listing._id %>/reviews/<%= review._id%>?_method=DELETE" method="post">
+              <button>Delete</button>
+            </form>
           </article>
         <% } %>
       </div>
