@@ -10,6 +10,7 @@ const wrapAsync = require("./utils/wrapAsync.js");
 const ExpressError = require("./utils/ExpressError.js");
 const engine = require("ejs-mate");
 const { listingSchema } = require("./schema.js");
+const { reviewSchema } = require("./schema.js");
 app.engine("ejs", engine);
 
 main()
@@ -43,6 +44,17 @@ const validateListing = (req, res, next) => {
     next();
   }
 };
+
+const validateReview = (req, res, next) => {
+  let { error } = reviewSchema.validate(req.body);
+  if (error) {
+    let errMsg = error.details.map((el) => el.message).join(", ");
+    throw new ExpressError(400, errMsg);
+  } else {
+    next();
+  }
+};
+
 //index route
 app.get(
   "/listings",
@@ -134,6 +146,7 @@ app.delete(
 //review route
 app.post(
   "/listings/:id/reviews",
+  validateReview,
   wrapAsync(async (req, res) => {
     let listing = await Listing.findById(req.params.id);
     let newReview = new Review(req.body.review);

@@ -35,17 +35,21 @@
   </div>
   <div class="col-8 offset-3">
     <h4>Leave a Review</h4>
-    <form action="/listings/<%= listing._id %>/reviews" method="post">
-      <div>
+    <form action="/listings/<%= listing._id %>/reviews" method="post" novalidate class="needs-validation">
+      <div class="mb-3">
         <label for="rating">Rating</label>
-        <input type="range" min="1" max="5" name="review[rating]"  class="form-range">
+        <input type="range" min="1" max="5" step="1" id="rating" class="form-range review-rating-slider">
+        <div class="form-text">Selected rating: <span id="ratingValue">Not selected</span></div>
+        <input type="hidden" name="review[rating]" id="ratingInput" required>
+        <div class="invalid-feedback">Please enter a rating between 1 and 5.</div>
       </div>
-      <div>
+      <div class="mb-3">
         <label for="comment">Comments</label>
-        <textarea name="review[comment]" id="comment" cols="30" rows="10"></textarea>
+        <textarea name="review[comment]" id="comment" cols="30" rows="5" class="form-control" required></textarea>
+        <div class="invalid-feedback">Please add a comment before submitting.</div>
       </div>
       <div></div>
-      <button>Submit</button>
+      <button class="btn btn-dark">Submit</button>
     </form>
   </div>
 </div>
