@@ -4,12 +4,12 @@ const mongoose = require("mongoose");
 const path = require("path");
 const methodOverride = require("method-override");
 const Listing = require("./models/listing.js");
+const Review = require("./models/review.js");
 const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
 const wrapAsync = require("./utils/wrapAsync.js");
 const ExpressError = require("./utils/ExpressError.js");
 const engine = require("ejs-mate");
 const { listingSchema } = require("./schema.js");
-
 app.engine("ejs", engine);
 
 main()
@@ -127,6 +127,21 @@ app.delete(
     let deletedListing = await Listing.findByIdAndDelete(id);
     console.log(deletedListing);
     res.redirect("/listings");
+  }),
+);
+
+//phase 2
+//review route
+app.post(
+  "/listings/:id/reviews",
+  wrapAsync(async (req, res) => {
+    let listing = await Listing.findById(req.params.id);
+    let newReview = new Review(req.body.review);
+
+    listing.reviews.push(newReview._id); //stores reference
+    await newReview.save(); //save actual data to db
+    await listing.save(); //save relationship
+    res.redirect(`/listings/${listing._id}`);
   }),
 );
 

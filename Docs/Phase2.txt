@@ -4,3 +4,14 @@ this wont require any authorization, anyone can give a review
 so once we create the review model schema then we linked
  it with the listing model in listing.js, using the 
  reference appraoch
+
+ then we added the form for review in show.ejs
+ then we made the form functional by enabling submissiong
+ at listings/:id/reviews, a post request is created in app.js
+
+ //we only import the listing schema, not the review shema coz 
+ we do not validate the reviews, but we validate the listings
+(the above line was written before the validation was done)
+ Review-> this is a model liek Listing.
+
+ 
