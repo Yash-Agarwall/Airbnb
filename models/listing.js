@@ -26,8 +26,8 @@ const listingSchema = new Schema({
     //here we are establishing a realtion between review and listing models
     reviews:[
         {
-            type: Schema.types.ObjectId,
-            ref: "Review"
+            // // type: Schema.types.ObjectId,
+            // ref: "Review"
 
         }
     ]
