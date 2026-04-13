@@ -23,6 +23,14 @@ const listingSchema = new Schema({
     price: Number,
     location: String,
     country: String,
+    //here we are establishing a realtion between review and listing models
+    reviews:[
+        {
+            type: Schema.types.ObjectId,
+            ref: "Review"
+
+        }
+    ]
 });
 
 const Listing = mongoose.model("Listing", listingSchema);
