@@ -30,14 +30,14 @@
             <input type="range" min="1" max="5" step="1" id="rating" class="form-range review-rating-slider">
             <div class="form-text">Selected rating: <span id="ratingValue" class="fw-semibold">Not selected</span></div>
             <input type="hidden" name="review[rating]" id="ratingInput" required>
-            <div class="invalid-feedback">Please choose a rating before submitting.</div>
+            <div class="text-danger small mt-1 d-none rating-error">Please choose a rating before submitting.</div>
           </div>
           <div class="mb-3">
             <label for="comment" class="form-label">Comments</label>
             <textarea name="review[comment]" id="comment" rows="4" class="form-control" placeholder="Share your experience..." required></textarea>
             <div class="invalid-feedback">Please add a comment before submitting.</div>
           </div>
-          <button class="btn btn-dark px-4">Post Review</button>
+          <button class="btn btn-dark px-4" id="reviewSubmitBtn" disabled>Post Review</button>
         </form>
       </div>
     </div>
