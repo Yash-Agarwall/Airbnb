@@ -155,6 +155,159 @@ img {
   padding-right: 0;
 }
 
+.show-shell {
+  max-width: 1080px;
+  margin: 2rem auto;
+  display: grid;
+  gap: 1.5rem;
+}
+
+.show-shell .card {
+  border: 1px solid #ececec !important;
+  border-radius: 1rem;
+  box-shadow: 0 14px 30px rgba(34, 34, 34, 0.06);
+  overflow: hidden;
+}
+
+.show-hero {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  background: linear-gradient(145deg, #ffffff, #f9fbff);
+}
+
+.show-hero-image {
+  width: 100%;
+  height: 100%;
+  min-height: 360px;
+  max-height: 500px;
+  object-fit: cover;
+}
+
+.show-hero-content {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.show-kicker {
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #6a7280;
+  margin: 0;
+}
+
+.show-title {
+  font-size: 2rem;
+  line-height: 1.2;
+  margin: 0;
+}
+
+.show-location {
+  color: #4b5563;
+  font-weight: 600;
+  margin: 0;
+}
+
+.show-price-tag {
+  display: inline-block;
+  width: fit-content;
+  background: #fe424d;
+  color: #ffffff;
+  border-radius: 999px;
+  padding: 0.42rem 0.9rem;
+  font-weight: 700;
+}
+
+.show-description {
+  color: #30343a;
+  margin: 0;
+}
+
+.show-actions {
+  display: flex;
+  gap: 0.65rem;
+  flex-wrap: wrap;
+  margin-top: 0.35rem;
+}
+
+.review-layout {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 1.5rem;
+}
+
+.review-form-card textarea {
+  resize: vertical;
+}
+
+.review-rating-slider {
+  accent-color: #fe424d;
+}
+
+.review-count {
+  font-size: 0.85rem;
+  color: #6b7280;
+}
+
+.review-item {
+  border: 1px solid #eceef3;
+  border-radius: 0.85rem;
+  padding: 0.9rem 1rem;
+  margin-bottom: 0.75rem;
+  background: #fcfdff;
+}
+
+.review-item:last-child {
+  margin-bottom: 0;
+}
+
+.review-item-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.review-rating {
+  line-height: 1;
+}
+
+.star {
+  color: #d4dae4;
+  font-size: 1rem;
+}
+
+.star.filled {
+  color: #f59e0b;
+}
+
+.review-score {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #374151;
+}
+
+.review-comment {
+  color: #272f3a;
+}
+
+@media (max-width: 992px) {
+  .show-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .show-hero-image {
+    min-height: 280px;
+    max-height: 340px;
+  }
+
+  .review-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* Error Page */
 
 .error-shell {

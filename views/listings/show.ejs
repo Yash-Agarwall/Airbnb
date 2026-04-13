@@ -1,55 +1,73 @@
 <% layout("/layouts/boilerplate") %>
 
-<div class="row mt-4">
-  <div class="col-12 col-md-10 col-lg-8 offset-md-1 offset-lg-2">
-    <h2 class="mb-4"><%= listing.title %></h2>
-
+<div class="show-shell">
+  <section class="show-hero card">
     <% if (listing.image && listing.image.url) { %>
-      <img src="<%= listing.image.url %>" alt="<%= listing.title %>" class="img-fluid rounded mb-4 show-img" style="max-height: 400px; object-fit: cover; width: 100%;" />
+      <img src="<%= listing.image.url %>" alt="<%= listing.title %>" class="show-hero-image" />
     <% } %>
+    <div class="show-hero-content">
+      <p class="show-kicker">Stay Details</p>
+      <h1 class="show-title"><%= listing.title %></h1>
+      <p class="show-location"><%= listing.location %>, <%= listing.country %></p>
+      <div class="show-price-tag">&#8377; <%= listing.price.toLocaleString("en-IN") %> / night</div>
+      <p class="show-description"><%= listing.description %></p>
+      <div class="show-actions">
+        <a href="/listings/<%= listing._id %>/edit" class="btn btn-dark">Edit Listing</a>
+        <form method="POST" action="/listings/<%= listing._id %>?_method=DELETE" class="d-inline">
+          <button class="btn btn-outline-danger">Delete Listing</button>
+        </form>
+      </div>
+    </div>
+  </section>
 
-    <div class="card mb-4 listing-card">
-      <div class="card-body">
-        <h5 class="card-title">Details</h5>
-        <div class="row">
-          <div class="col-md-6">
-            <p class="mb-2"><strong>Location:</strong> <%= listing.location %></p>
-            <p class="mb-2"><strong>Country:</strong> <%= listing.country %></p>
+  <section class="review-layout">
+    <div class="card review-form-card">
+      <div class="card-body p-4">
+        <h4 class="mb-3">Leave a Review</h4>
+        <form action="/listings/<%= listing._id %>/reviews" method="post" novalidate class="needs-validation">
+          <div class="mb-3">
+            <label for="rating" class="form-label">Rating</label>
+            <input type="range" min="1" max="5" step="1" id="rating" class="form-range review-rating-slider">
+            <div class="form-text">Selected rating: <span id="ratingValue" class="fw-semibold">Not selected</span></div>
+            <input type="hidden" name="review[rating]" id="ratingInput" required>
+            <div class="invalid-feedback">Please choose a rating before submitting.</div>
           </div>
-          <div class="col-md-6">
-            <p class="mb-2"><strong>Price:</strong> <span class="text-primary fs-5">&#8377; <%= listing.price.toLocaleString("en-IN") %></span></p>
+          <div class="mb-3">
+            <label for="comment" class="form-label">Comments</label>
+            <textarea name="review[comment]" id="comment" rows="4" class="form-control" placeholder="Share your experience..." required></textarea>
+            <div class="invalid-feedback">Please add a comment before submitting.</div>
           </div>
+          <button class="btn btn-dark px-4">Post Review</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="card review-list-card">
+      <div class="card-body p-4">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h4 class="mb-0">Guest Reviews</h4>
+          <span class="review-count"><%= listing.reviews.length %> total</span>
         </div>
-        <hr />
-        <p><strong>Description</strong></p>
-        <p class="card-text"><%= listing.description %></p>
-      </div>
-    </div>
 
-    <div class="d-flex gap-2 mb-4">
-      <a href="/listings/<%= listing._id %>/edit" class="btn btn-dark">Edit</a>
-      <form method="POST" action="/listings/<%= listing._id %>?_method=DELETE" style="display: inline;">
-        <button class="btn btn-danger">Delete</button>
-      </form>
+        <% if (listing.reviews.length === 0) { %>
+          <p class="text-muted mb-0">No reviews yet. Be the first to share feedback.</p>
+        <% } %>
+
+        <% for (let review of listing.reviews) { %>
+          <article class="review-item">
+            <div class="review-item-head">
+              <p class="review-rating mb-1">
+                <% for (let i = 1; i <= 5; i++) { %>
+                  <span class="<%= i <= review.rating ? 'star filled' : 'star' %>">&#9733;</span>
+                <% } %>
+              </p>
+              <span class="review-score"><%= review.rating %>/5</span>
+            </div>
+            <p class="review-comment mb-0"><%= review.comment %></p>
+          </article>
+        <% } %>
+      </div>
     </div>
-  </div>
-  <div class="col-8 offset-3">
-    <h4>Leave a Review</h4>
-    <form action="/listings/<%= listing._id %>/reviews" method="post" novalidate class="needs-validation">
-      <div class="mb-3">
-        <label for="rating">Rating</label>
-        <input type="range" min="1" max="5" step="1" id="rating" class="form-range review-rating-slider">
-        <div class="form-text">Selected rating: <span id="ratingValue">Not selected</span></div>
-        <input type="hidden" name="review[rating]" id="ratingInput" required>
-        <div class="invalid-feedback">Please enter a rating between 1 and 5.</div>
-      </div>
-      <div class="mb-3">
-        <label for="comment">Comments</label>
-        <textarea name="review[comment]" id="comment" cols="30" rows="5" class="form-control" required></textarea>
-        <div class="invalid-feedback">Please add a comment before submitting.</div>
-      </div>
-      <div></div>
-      <button class="btn btn-dark">Submit</button>
-    </form>
+  </section>
   </div>
 </div>
