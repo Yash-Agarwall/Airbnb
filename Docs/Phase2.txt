@@ -135,3 +135,14 @@ Like:
 /users → handled by users router
 /reviews → handled by reviews router
 
+so while doing the restructuring of the review part, we encountered
+as problem, since we try to reduce teh common route so we did 
+
+app.use("/listings/:id/reviews", reviews);
+/listings/:id/reviews-> this part is called as the parent route
+but if we do this then the id parameter is never sent to the 
+reviews.js, hence it cant perform any operations
+
+now to avoid this we use merge params
+in teh router object of the review.js file inside routerwrite this
+const router = express.Router({mergeParams: true});
