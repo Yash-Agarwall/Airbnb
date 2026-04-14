@@ -35,3 +35,103 @@ cose:
   listingSchema.post("findOneAndDelete", async (listing) =>{
     await Review.deleteMany({_id: {$in: listing.reviews}});
 })
+Now we will start restructuring the project, so we made teh 
+routes folder and then made listing.js 
+
+then we cut all the listing routes from app.js and paste them in 
+listing.js, instead of app.use and all we will be using 
+router.use etc.....then we also havea to require things being 
+used in the routes, liek warpasync and all
+
+here is the gist of what just happened: 
+🧠 What you did
+
+Earlier:
+
+app.get("/listings", ...)
+app.post("/listings", ...)
+
+Now:
+
+You moved all listing routes into one separate file
+And used:
+app.use("/listings", listings);
+
+👉 This is the key line
+
+🔥 How it actually works
+1️⃣ In your route file
+
+You wrote:
+
+const router = express.Router();
+
+👉 This creates a mini app (router)
+
+Then:
+
+router.get("/", ...)
+router.get("/:id", ...)
+⚡ Important Understanding
+
+These routes are NOT absolute
+
+They are relative to where router is mounted
+
+2️⃣ In your main file
+
+From your code:
+
+
+const listings = require("./routes/listing.js");
+
+app.use("/listings", listings);
+🔗 What Express does internally
+
+It combines paths like this:
+
+Router Path	Final URL
+/	/listings
+/new	/listings/new
+/:id	/listings/:id
+🧩 Example
+In routes/listing.js
+router.get("/", ...)
+In app.js
+app.use("/listings", listings);
+
+👉 Final route becomes:
+
+GET /listings
+💡 Think of it like prefixing
+app.use("/listings", router);
+
+means:
+
+“Attach /listings in front of every route inside this router”
+
+🔥 Why we do this
+❌ Before (messy)
+app.get("/listings")
+app.get("/listings/:id")
+app.post("/listings")
+✅ After (clean)
+router.get("/")
+router.get("/:id")
+router.post("/")
+
+👉 Much cleaner, scalable, modular
+
+🧠 Analogy (very helpful)
+
+Think:
+
+app = main server
+router = sub-app for a feature
+
+Like:
+
+/listings → handled by listings router
+/users → handled by users router
+/reviews → handled by reviews router
+
