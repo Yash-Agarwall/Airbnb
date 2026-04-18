@@ -18,14 +18,24 @@ body {
 
 .flash-alert {
   margin: 0 auto 1.1rem;
-  border: 1px solid #b6eac3;
+  border: 1px solid transparent;
   border-radius: 0.9rem;
-  background: linear-gradient(135deg, #f7fff9 0%, #eaffe7 100%);
-  color: #0f5132;
   font-weight: 600;
   box-shadow: 0 10px 24px rgba(34, 34, 34, 0.08);
   padding: 0.9rem 2.35rem 0.9rem 0.95rem;
   animation: flashSlideIn 260ms ease-out;
+}
+
+.flash-alert.alert-success {
+  border-color: #b6eac3;
+  background: linear-gradient(135deg, #f7fff9 0%, #eaffe7 100%);
+  color: #0f5132;
+}
+
+.flash-alert.alert-danger {
+  border-color: #f5c2c7;
+  background: linear-gradient(135deg, #fff5f5 0%, #ffe3e6 100%);
+  color: #842029;
 }
 
 .flash-alert .btn-close {
@@ -44,6 +54,10 @@ body {
 
 .flash-alert .btn-close:focus {
   box-shadow: 0 0 0 0.2rem rgba(25, 135, 84, 0.18);
+}
+
+.flash-alert.alert-danger .btn-close:focus {
+  box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.18);
 }
 
 @keyframes flashSlideIn {
