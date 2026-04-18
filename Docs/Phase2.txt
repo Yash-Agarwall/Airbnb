@@ -396,3 +396,5 @@ made an expiry data for te cookie
 
 app.flash is used in the app.js and create route of listing.js
 to show the msg we will render it in index.ejs
+we have made a flash.ejs to use it everywhere using the boilerplate
+
