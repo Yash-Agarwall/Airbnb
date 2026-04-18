@@ -38,7 +38,13 @@ app.get("/", (req, res) => {
 const sessionOptions = {
     secret: "mysupersecretcode",
     resave: false,           
-    saveUninitialized: false
+    saveUninitialized: false,
+    //here we are setting the expiry date of a cookie
+    cookie: {
+      expires: Date.now() + 7*24*60*60*1000,
+      maxAge: 7*24*60*60*1000,
+      httpOny: true, //this is for security purpose, to avoid cross scripting attacks
+    }
 }
 app.use(session(sessionOptions));
 
