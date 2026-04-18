@@ -1,4 +1,4 @@
-const express= require("express");
+const express = require("express");
 const router = express.Router();
 const wrapAsync = require("../utils/wrapAsync.js");
 const { listingSchema } = require("../schema.js");
@@ -80,6 +80,7 @@ router.delete(
     let { id } = req.params;
     let deletedListing = await Listing.findByIdAndDelete(id);
     console.log(deletedListing);
+    req.flash("success", "Listing deleted successfully");
     res.redirect("/listings");
   }),
 );

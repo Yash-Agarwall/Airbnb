@@ -14,6 +14,49 @@ body {
   flex: 1;
 }
 
+/* Flash alerts */
+
+.flash-alert {
+  margin: 0 auto 1.1rem;
+  border: 1px solid #b6eac3;
+  border-radius: 0.9rem;
+  background: linear-gradient(135deg, #f7fff9 0%, #eaffe7 100%);
+  color: #0f5132;
+  font-weight: 600;
+  box-shadow: 0 10px 24px rgba(34, 34, 34, 0.08);
+  padding: 0.9rem 2.35rem 0.9rem 0.95rem;
+  animation: flashSlideIn 260ms ease-out;
+}
+
+.flash-alert .btn-close {
+  width: 0.5rem;
+  height: 0.5rem;
+  padding: 0.55rem;
+  background-size: 0.5rem;
+  opacity: 0.55;
+  top: 0.75rem;
+  right: 0.7rem;
+}
+
+.flash-alert .btn-close:hover {
+  opacity: 0.9;
+}
+
+.flash-alert .btn-close:focus {
+  box-shadow: 0 0 0 0.2rem rgba(25, 135, 84, 0.18);
+}
+
+@keyframes flashSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .navbar {
   height: 4rem;
   background-color: white;

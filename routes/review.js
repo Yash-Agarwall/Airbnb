@@ -1,5 +1,5 @@
 const express = require("express");
-const router = express.Router({mergeParams: true});
+const router = express.Router({ mergeParams: true });
 const wrapAsync = require("../utils/wrapAsync.js");
 const { reviewSchema } = require("../schema.js");
 
@@ -27,6 +27,7 @@ router.post(
     listing.reviews.push(newReview._id); //stores reference
     await newReview.save(); //save actual data to db
     await listing.save(); //save relationship
+    req.flash("success", "Review added successfully");
     res.redirect(`/listings/${listing._id}`);
   }),
 );
@@ -39,6 +40,7 @@ router.delete(
     await Listing.findByIdAndUpdate(id, { $pull: { reviews: reviewId } });
     await Review.findByIdAndDelete(reviewId);
 
+    req.flash("success", "Review deleted successfully");
     res.redirect(`/listings/${id}`);
   }),
 );
