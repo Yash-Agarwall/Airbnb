@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/Yash-Agarwall/Airbnb#readme",
   "dependencies": {
+    "connect-flash": "^0.1.1",
     "ejs": "^4.0.1",
     "ejs-mate": "^4.0.0",
     "express": "^5.2.1",
