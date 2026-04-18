@@ -547,3 +547,8 @@ then the post req route extractst the usernam/pass/email from body of the req an
 using User.register(). this is how the sign up works
 =====================================================================
 
+------------------------------
+Login User:
+just make a get and post route in user.js of ru=outes and use password.authenticate() for verification
+(this is having a syntax, use that). and obv we will render login.ejs for this
+
