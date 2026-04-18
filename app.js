@@ -11,6 +11,8 @@ app.engine("ejs", engine);
 
 const listings = require("./routes/listing.js");
 const reviews = require("./routes/review.js");
+
+const session = require("express-session");
 main()
   .then(() => {
     console.log("Connect to db");
@@ -32,6 +34,14 @@ app.use(methodOverride("_method"));
 app.get("/", (req, res) => {
   res.send("hii i am get api");
 });
+
+const sessionOptions = {
+    secret: "mysupersecretcode",
+    resave: false,           
+    saveUninitialized: false
+}
+app.use(session(sessionOptions));
+
 app.use("/listings", listings);
 app.use("/listings/:id/reviews", reviews);
 
