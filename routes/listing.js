@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const mongoose = require("mongoose");
 const wrapAsync = require("../utils/wrapAsync.js");
 const { listingSchema } = require("../schema.js");
 const Listing = require("../models/listing.js");
@@ -15,6 +16,14 @@ const validateListing = (req, res, next) => {
   }
 };
 
+router.param("id", (req, res, next, id) => {
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    req.flash("error", "Listing you requested for does not exist");
+    return res.redirect("/listings");
+  }
+  next();
+});
+
 //index route
 router.get(
   "/",
@@ -27,6 +36,11 @@ router.get(
 //new route
 router.get("/new", (req, res) => {
   res.render("listings/new");
+});
+
+//redirect helper for common signup path typo, needed to it doenst clash with /listings/:id
+router.get("/signup", (req, res) => {
+  res.redirect("/signup");
 });
 
 //create route

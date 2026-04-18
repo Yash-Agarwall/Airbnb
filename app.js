@@ -9,11 +9,15 @@ const ExpressError = require("./utils/ExpressError.js");
 const engine = require("ejs-mate");
 app.engine("ejs", engine);
 
-const listings = require("./routes/listing.js");
-const reviews = require("./routes/review.js");
+const listingsRouter = require("./routes/listing.js");
+const reviewsRouter = require("./routes/review.js");
+const userRouter = require("./routes/user.js");
 
 const session = require("express-session");
 const flash = require("connect-flash");
+const passport = require("passport");
+const LocalStrategy  = require("passport-local");
+const User = require("./models/user.js");
 main()
   .then(() => {
     console.log("Connect to db");
@@ -50,13 +54,33 @@ const sessionOptions = {
 app.use(session(sessionOptions));
 //make sure to use the flash before the routes, coz we are using the flash over the routes
 app.use(flash());
+
+//passport should use the session also, so define it below that
+// middleware
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+
+//serialize: to store the user related info in the session
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
 app.use((req,res,next) => {
   res.locals.success = req.flash("success");
   res.locals.error = req.flash("error");
   next();
 })
-app.use("/listings", listings);
-app.use("/listings/:id/reviews", reviews);
+app.get("/demouser", async (req,res) =>{
+  let fakeUser = new User({
+    email: "stu@af",
+    username:"sfgs"//not that the user schema deosnt have username but this will be handled by passport ig
+
+  })
+})
+
+app.use("/listings", listingsRouter);
+app.use("/listings/:id/reviews", reviewsRouter);
+app.use("/", userRouter);
 
 app.use((req, res, next) => {
   next(new ExpressError(404, "Page not found"));

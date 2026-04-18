@@ -398,3 +398,152 @@ app.flash is used in the app.js and create route of listing.js
 to show the msg we will render it in index.ejs
 we have made a flash.ejs to use it everywhere using the boilerplate
 
+---------------
+Authentication = Who are you? (Login — proving your identity)
+Authorization = What are you allowed to do? (Permissions — after we know who you are)
+
+Storing passwords:
+Never store plain text passwords. If your database leaks, everyone's password is exposed.
+So you don't store the password — you store proof that they know the password.
+
+A hash function takes input and gives a fixed, one-way output. Rof diff input, there is a diff output but of same length.
+small changes ininput should bring a large change in output:
+"mypassword123"  →  bcrypt  →  "$2b$10$xyz...."
+One-way means you can't reverse it(we cant get the original passwrod by passing the hash).
+So when user logs in:
+user types "mypassword123" to login into this account, we pass it ot the ash function again
+→ hash it → "$2b$10$xyz...."
+→ compare with stored hash
+→ match? ✅ logged in
+You never "decrypt" a password — you just hash and compare.
+
+4. Salting
+Problem with plain hashing: if two users have the same password,
+they get the same hash. Hackers use precomputed "rainbow tables/reverse lookup tables" (hash → password lookups) to reverse common hashes.
+Salt = a random string added to the password "before hashing":
+"mypassword123" + "x9k2p" (random salt) → totally unique hash
+Even if two users have the same password, their hashes are completely different. bcrypt does this automatically — the salt is embedded in the hash output itself.
+
+5. Passport.js
+Manually writing login logic (check email, compare hash, create session) gets repetitive.
+ Passport.js is a Node.js middleware that handles authentication for you.
+It works via Strategies — plugins for different auth methods:
+
+passport-local → username/password
+passport-google-oauth20 → Google login
+passport-github → GitHub login
+
+npm i passport
+npm i passport-local
+
+------
+now we create user.js in the models folder 
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
+const passpostLocalMongooose = require("passport-local-mongooose")
+
+const userSchema = new Schema({
+    email: {
+        type: String,
+        required: true,
+    },
+   
+})
+
+//this will do everything related to password, hashing salting etc
+User.plugin(passpostLocalMongooose);
+
+module.exports = mongoose.model("User", userSchema);
+
+
+const passport = require("passport");
+const LocalStrategy  = require("passport-local");
+const User = require("./models/user.js");
+
+//passport should use the session also, so define it below that
+// middleware
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+
+//serialize: to store the user related info in the session
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+
+register(user, password, callback(optional))-> method by passport to register a new user instance with a given password
+it automatically checks if the user is unique or not
+
+Even though you didn’t define username in your schema, it is being added automatically by the plugin:
+
+👉 passport-local-mongoose
+
+💡 What the plugin actually does
+
+When you write:
+
+userSchema.plugin(passportLocalMongoose);
+
+this plugin modifies your schema behind the scenes and adds:
+
+username field
+hash (hashed password)
+salt
+helper methods like:
+.register()
+.authenticate()
+etc.
+
+So effectively, your schema becomes something like:
+
+{
+  email: String,
+  username: String,   // added by plugin
+  hash: String,       // added
+  salt: String        // added
+}
+
+
+-----------
+sign up
+How Signup Works In Your Code
+
+User opens signup page at /signup.
+Route is in user.js, and this route renders signup.ejs.
+
+Form submits username, email, password using POST /signup.
+Form is in signup.ejs, and fields are named correctly as username, email, password.
+
+Request body is parsed by Express middleware.
+Body parsing is enabled in app.js with urlencoded middleware, so req.body gets filled.
+
+Signup route creates and registers user.
+In user.js, POST /signup:
+
+Reads username, email, password from req.body
+Creates new User document
+Calls User.register(newUser, password)
+Password handling is done by passport-local-mongoose plugin.
+In user.js, plugin adds:
+username field support
+hash and salt storage
+User.register and User.authenticate helper methods
+So plain password is never stored directly.
+Success and error feedback are shown using flash.
+Route sets req.flash success or error in user.js
+Locals are exposed in app.js
+Messages render in flash.ejs
+Passport And Session Setup (Already Done)
+
+Session middleware is enabled in app.js.
+Passport initialize and session middleware are enabled in app.js.
+Local strategy uses User.authenticate in app.js.
+serializeUser and deserializeUser are configured in app.js.
+
+=====================================================================
+basically, first we made a user.js route in the routes/users, tehn there we made a get rquest to /signup
+which simply renders singup.ejs(this is just a form sending post req to /signup), once the fom is submitted
+then the post req route extractst the usernam/pass/email from body of the req and then register the user
+using User.register(). this is how the sign up works
+=====================================================================
+
