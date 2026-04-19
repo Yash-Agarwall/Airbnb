@@ -10,13 +10,20 @@ module.exports.renderNewForm = (req, res) => {
   res.render("listings/new");
 };
 
-module.exports.createListing = wrapAsync(async (req, res, next) => {
+module.exports.createListing = async (req, res, next) => {
   const newListing = new Listing(req.body.listing);
   newListing.owner = req.user._id;
+
+  if (req.file) {
+    newListing.image = {
+      filename: req.file.public_id,
+      url: req.file.secure_url || req.file.url,
+    };
+  }
   await newListing.save();
   req.flash("success", "New listing created");
-  res.redirect("/listings");
-});
+  return res.redirect("/listings");
+};
 
 module.exports.showListing = wrapAsync(async (req, res) => {
   let { id } = req.params;

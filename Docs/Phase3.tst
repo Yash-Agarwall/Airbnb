@@ -45,3 +45,50 @@ this is the new post route thing:
 .post(isLoggedIn, upload.single('listing[image]'), wrapAsync(listingController.createListing));
 
 right now it is saving to local only, but we watnt o save to cloud storage
+
+to use .env in backend files we use a libraray named
+dotenv which loads variables from a .env into process.env
+
+require("dotenv").config();-> using the config method after requiring
+
+if(process.env.NODE_ENV!="production"){
+  require("dotenv").config();
+} we do this to make sure that we do not upload these creentail of dotenv to production
+
+npm i dotenv
+npm i cloudinary
+npm i multer-storage-cloudinary
+
+now we want to make sure that we can access the cloudinary account
+so make cloudinary.js file
+
+first we do congig(matlab link karna)
+cloudinary.config({
+    cloud_name: process.env.CLOUD_NAME,
+    api_key: process.env.CLOUD_API_KEY,
+    api_secret: process.env.CLOUD_API_SECRET,
+});
+
+then we make a storage 
+const storage = new CloudinaryStorage({
+    cloudinary: cloudinary,
+    params: {
+      folder: 'wanderlust_DEV',-> this is the name of the folder we are making
+      allowedFormats: ["png", "jpg", "svg", "jpeg", "ico"],
+    },
+});
+these will be used in listing.js
+
+const {storage} = require("../cloudConfig.js");
+const upload = multer({storage});-> notice that we have updated the destination of the nulter
+
+Modification in routes:
+.post(isLoggedIn, upload.single('listing[image]'), validateListing, wrapAsync(listingController.createListing));
+
+in controller:
+if createListing:
+if (req.file) {
+    newListing.image = {
+      filename: req.file.public_id,
+      url: req.file.secure_url || req.file.url,
+    };
