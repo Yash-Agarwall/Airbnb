@@ -7,6 +7,9 @@ const Listing = require("../models/listing.js");
 const ExpressError = require("../utils/ExpressError.js");
 const { isLoggedIn, isOwner, validateListing } = require("../middleware.js");
 
+const multer = require("multer");
+const upload = multer({dest : 'uploads/'})
+
 const listingController = require("../controllers/listing.js");
 router.param("id", (req, res, next, id) => {
   if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -21,8 +24,7 @@ router
   //index route
   .get(wrapAsync(listingController.index))
   //create route
-  .post(isLoggedIn, validateListing, listingController.createListing);
-
+  .post(isLoggedIn, upload.single('listing[image]'), wrapAsync(listingController.createListing));
 //new route
 router.get("/new", isLoggedIn, listingController.renderNewForm);
 
