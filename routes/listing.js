@@ -7,6 +7,7 @@ const Listing = require("../models/listing.js");
 const ExpressError = require("../utils/ExpressError.js");
 const { isLoggedIn, isOwner, validateListing } = require("../middleware.js");
 
+const listingController = require("../controllers/listing.js");
 router.param("id", (req, res, next, id) => {
   if (!mongoose.Types.ObjectId.isValid(id)) {
     req.flash("error", "Listing you requested for does not exist");
@@ -16,13 +17,8 @@ router.param("id", (req, res, next, id) => {
 });
 
 //index route
-router.get(
-  "/",
-  wrapAsync(async (req, res) => {
-    const allListings = await Listing.find({});
-    res.render("listings/index", { allListings });
-  }),
-);
+//bascially we have shifted the code into a funciton named index
+router.get("/", wrapAsync(listingController.index));
 
 //new route
 router.get("/new", isLoggedIn, (req, res) => {
