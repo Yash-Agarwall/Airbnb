@@ -299,8 +299,69 @@ img {
   resize: vertical;
 }
 
-.review-rating-slider {
-  accent-color: #fe424d;
+.starability-slot.review-rating-group {
+  display: inline-flex;
+  flex-direction: row-reverse;
+  gap: 0.15rem;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.starability-slot.review-rating-group > input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.starability-slot.review-rating-group > label {
+  width: auto;
+  height: auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  background: transparent;
+  color: #d2d8e3;
+  cursor: pointer;
+  transition:
+    color 0.16s ease,
+    transform 0.16s ease;
+  font-size: 0;
+  line-height: 1;
+}
+
+.starability-slot.review-rating-group > label::before {
+  content: "★";
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.starability-slot.review-rating-group > label:hover,
+.starability-slot.review-rating-group > label:hover ~ label,
+.starability-slot.review-rating-group > input:checked + label,
+.starability-slot.review-rating-group > input:checked + label ~ label {
+  color: #f59e0b;
+  transform: translateY(-1px);
+}
+
+.starability-slot.review-rating-group > input:focus + label {
+  text-shadow: 0 0 0.2rem rgba(245, 158, 11, 0.45);
+}
+
+.review-form-card .form-label {
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.review-form-card .form-control {
+  border-radius: 0.8rem;
+  border-color: #d8dee9;
+}
+
+.review-form-card .form-control:focus {
+  border-color: #9ca3af;
+  box-shadow: 0 0 0 0.2rem rgba(17, 24, 39, 0.08);
 }
 
 .review-count {
@@ -309,11 +370,12 @@ img {
 }
 
 .review-item {
-  border: 1px solid #eceef3;
-  border-radius: 0.85rem;
-  padding: 0.9rem 1rem;
-  margin-bottom: 0.75rem;
-  background: #fcfdff;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.95rem;
+  padding: 1rem 1.05rem;
+  margin-bottom: 0.9rem;
+  background: #ffffff;
+  box-shadow: 0 6px 20px rgba(17, 24, 39, 0.04);
 }
 
 .review-item:last-child {
@@ -348,6 +410,23 @@ img {
 
 .review-comment {
   color: #272f3a;
+  margin-top: 0.35rem;
+}
+
+.review-item form button {
+  border: 1px solid #ef4444;
+  color: #ef4444;
+  background: transparent;
+  border-radius: 0.55rem;
+  padding: 0.28rem 0.7rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+  transition: all 0.16s ease;
+}
+
+.review-item form button:hover {
+  background: #ef4444;
+  color: #ffffff;
 }
 
 @media (max-width: 992px) {
