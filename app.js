@@ -68,6 +68,8 @@ passport.deserializeUser(User.deserializeUser());
 app.use((req, res, next) => {
   res.locals.success = req.flash("success");
   res.locals.error = req.flash("error");
+  //we are storing this so it can be accesses in the navbar.ejs
+  res.locals.currUser = req.user;
   next();
 });
 // app.get("/demouser", async (req, res) => {

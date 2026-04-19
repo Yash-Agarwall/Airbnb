@@ -567,3 +567,14 @@ create a middleware for it in middleware.js
 
 -------------------
 logout user: req.logout()-> exists in passport
+just make /logout route for now and call req.logout
+ also make sure to handle its overlap with /:id
+
+
+ now we make signin/up/login in navbar.ejs
+ now to make sure that wither one of loing/logout is shown at once
+ we check req.user-> undefined(not loggedIn), obj(means logged in)
+but we cant directly access req.user(meaning that we cant directly access
+the the request object f=directly in the ejs template), so we will save
+it first to req.locals and then access them
+
