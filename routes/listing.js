@@ -7,7 +7,6 @@ const Listing = require("../models/listing.js");
 const ExpressError = require("../utils/ExpressError.js");
 const { isLoggedIn, isOwner, validateListing } = require("../middleware.js");
 
-
 router.param("id", (req, res, next, id) => {
   if (!mongoose.Types.ObjectId.isValid(id)) {
     req.flash("error", "Listing you requested for does not exist");
@@ -59,7 +58,12 @@ router.get(
   wrapAsync(async (req, res) => {
     let { id } = req.params;
     const listing = await Listing.findById(id)
-      .populate("reviews")
+      .populate({
+        path: "reviews",
+        populate: {
+          path: "author",
+        },
+      })
       .populate("owner");
     if (!listing) {
       req.flash("error", "Listing you requested for does not exist");
@@ -73,7 +77,8 @@ router.get(
 //Edit route
 router.get(
   "/:id/edit",
-  isLoggedIn,isOwner,
+  isLoggedIn,
+  isOwner,
   wrapAsync(async (req, res) => {
     let { id } = req.params;
     const listing = await Listing.findById(id);
@@ -87,7 +92,7 @@ router.get(
 
 //update route
 router.put(
-  "/:id",  
+  "/:id",
   isLoggedIn,
   isOwner,
   validateListing,

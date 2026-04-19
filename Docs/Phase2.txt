@@ -655,3 +655,6 @@ now we authorize reviews
 1: we make sure that add review is visible only when logged in, for that just check currUser exists or not
 also call isLoggedIn middleware for post route of review 
 2: add author to review model, then while adding reviw, add author id also
+
+now we want that each reviw should have its authors name, for that we will need to 
+populate reveiw along with the listings, for that we would need nested populate

@@ -63,6 +63,7 @@
 
         <% for (let review of listing.reviews) { %>
           <article class="review-item">
+            <p class="text-muted mb-1">By: <%= review.author ? review.author.username : "Anonymous" %></p>
             <div class="review-item-head">
               <p class="review-rating mb-1">
                 <% for (let i = 1; i <= 5; i++) { %>
@@ -72,9 +73,11 @@
               <span class="review-score"><%= review.rating %>/5</span>
             </div>
             <p class="review-comment mb-0"><%= review.comment %></p>
+            <% if (currUser && review.author && currUser._id.equals(review.author._id)) { %>
             <form action="/listings/<%= listing._id %>/reviews/<%= review._id%>?_method=DELETE" method="post">
               <button>Delete</button>
             </form>
+            <% } %>
           </article>
         <% } %>
       </div>
