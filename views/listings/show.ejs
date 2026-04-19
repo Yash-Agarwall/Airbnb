@@ -26,6 +26,8 @@
 
   <section class="review-layout">
     <div class="card review-form-card">
+      <!-- here we ahve to make sure that the usr is logged in, for that just check if currUser exists -->
+      <% if(currUser) {%>
       <div class="card-body p-4">
         <h4 class="mb-3">Leave a Review</h4>
         <form action="/listings/<%= listing._id %>/reviews" method="post" novalidate class="needs-validation">
@@ -44,6 +46,8 @@
           <button class="btn btn-dark px-4" id="reviewSubmitBtn" disabled>Post Review</button>
         </form>
       </div>
+      <% } %>
+    
     </div>
 
     <div class="card review-list-card">

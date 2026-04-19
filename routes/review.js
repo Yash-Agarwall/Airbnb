@@ -6,11 +6,11 @@ const { reviewSchema } = require("../schema.js");
 const Listing = require("../models/listing.js");
 const Review = require("../models/review.js");
 const ExpressError = require("../utils/ExpressError.js");
-const { validateReview } = require("../middleware.js");
-
+const { validateReview, isLoggedIn } = require("../middleware.js");
 
 router.post(
   "/",
+  isLoggedIn,
   validateReview,
   wrapAsync(async (req, res) => {
     let listing = await Listing.findById(req.params.id);
@@ -20,7 +20,9 @@ router.post(
     }
     let newReview = new Review(req.body.review);
 
+    newReview.author = req.user._id;
     listing.reviews.push(newReview._id); //stores reference
+    
     await newReview.save(); //save actual data to db
     await listing.save(); //save relationship
     req.flash("success", "Review added successfully");
