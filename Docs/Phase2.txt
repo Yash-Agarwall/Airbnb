@@ -636,3 +636,17 @@ and use a map funciton as follows which adds owner to each entry
 initData.data = initData.data.map((obj) => ({...obj, owner:"69e3077a8bd1f43256b05d0a"}))
 
 then do node index.js and check in mongosh, usng db.lsiitngs.find(), now every entry is having a woner
+
+then we authorize edit and delete button on client side(ui only, no postman etc)
+for that we just cehck if  currUser._id equals owner._id, in show.ejs
+(this currUSer is saved in locals by us in app.js line 68)
+
+now coming to server side authorization:
+so for that dwe will have to keep cheks in the routes
+eg: for update route
+if(!listing.owner._id.equals(res.locals.currUser._id)){
+  req.flash("error", "You dont have permission to update this listing");
+  return res.redirect(`/listings/${id}`);
+}
+
+but since tis is repertive so we made a middleware for this also, names isOwner
