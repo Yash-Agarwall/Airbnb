@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+  <title id="title">Default Listing Image</title>
+  <desc id="desc">Simple fallback illustration for listings when no uploaded image is available.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f5f7fa" />
+      <stop offset="100%" stop-color="#dfe7f1" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="800" fill="url(#bg)" />
+  <rect x="110" y="140" width="980" height="520" rx="28" fill="#ffffff" opacity="0.88" />
+  <path d="M210 580 L420 360 L580 520 L700 430 L960 580 Z" fill="#9fb3c8" />
+  <circle cx="845" cy="285" r="52" fill="#f4c96d" />
+  <text x="600" y="645" text-anchor="middle" font-family="Arial, sans-serif" font-size="44" fill="#374151">No image uploaded</text>
+</svg>

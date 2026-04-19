@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const Review = require("./review");
+const DEFAULT_LISTING_IMAGE = "/images/default-listing.svg";
 const listingSchema = new Schema({
   title: {
     type: String,
