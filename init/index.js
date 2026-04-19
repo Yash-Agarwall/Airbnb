@@ -19,7 +19,7 @@ async function main(){
 const initDB= async() => {
     //if the db already contains some data then we clean it first
     await Listing.deleteMany({});
-
+    initData.data = initData.data.map((obj) => ({...obj, owner:"69e3077a8bd1f43256b05d0a"}))
     //then we initialize the database, we are accessing the 
     //data key of initData object
     await Listing.insertMany(initData.data);
