@@ -12,12 +12,15 @@
       <p class="show-location"><%= listing.location %>, <%= listing.country %></p>
       <div class="show-price-tag">&#8377; <%= listing.price.toLocaleString("en-IN") %> / night</div>
       <p class="show-description"><%= listing.description %></p>
+
+      <% if(currUser && currUser._id.equals(listing.owner._id)) {%>
       <div class="show-actions">
         <a href="/listings/<%= listing._id %>/edit" class="btn btn-dark">Edit Listing</a>
         <form method="POST" action="/listings/<%= listing._id %>?_method=DELETE" class="d-inline">
           <button class="btn btn-outline-danger">Delete Listing</button>
         </form>
       </div>
+      <% } %>
     </div>
   </section>
 
