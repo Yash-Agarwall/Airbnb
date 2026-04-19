@@ -16,7 +16,7 @@ const userRouter = require("./routes/user.js");
 const session = require("express-session");
 const flash = require("connect-flash");
 const passport = require("passport");
-const LocalStrategy  = require("passport-local");
+const LocalStrategy = require("passport-local");
 const User = require("./models/user.js");
 main()
   .then(() => {
@@ -41,16 +41,16 @@ app.get("/", (req, res) => {
 });
 
 const sessionOptions = {
-    secret: "mysupersecretcode",
-    resave: false,           
-    saveUninitialized: true,
-    //here we are setting the expiry date of a cookie
-    cookie: {
-      expires: Date.now() + 7*24*60*60*1000,
-      maxAge: 7*24*60*60*1000,
-      httpOnly: true, //this is for security purpose, to avoid cross scripting attacks
-    }
-}
+  secret: "mysupersecretcode",
+  resave: false,
+  saveUninitialized: true,
+  //here we are setting the expiry date of a cookie
+  cookie: {
+    expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
+    maxAge: 7 * 24 * 60 * 60 * 1000,
+    httpOnly: true, //this is for security purpose, to avoid cross scripting attacks
+  },
+};
 app.use(session(sessionOptions));
 //make sure to use the flash before the routes, coz we are using the flash over the routes
 app.use(flash());
@@ -65,18 +65,17 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-app.use((req,res,next) => {
+app.use((req, res, next) => {
   res.locals.success = req.flash("success");
   res.locals.error = req.flash("error");
   next();
-})
-app.get("/demouser", async (req,res) =>{
+});
+app.get("/demouser", async (req, res) => {
   let fakeUser = new User({
     email: "stu@af",
-    username:"sfgs"//not that the user schema deosnt have username but this will be handled by passport ig
-
-  })
-})
+    username: "sfgs", //not that the user schema deosnt have username but this will be handled by passport ig
+  });
+});
 
 app.use("/listings", listingsRouter);
 app.use("/listings/:id/reviews", reviewsRouter);
@@ -87,6 +86,9 @@ app.use((req, res, next) => {
 });
 
 app.use((err, req, res, next) => {
+  if (res.headersSent) {
+    return next(err);
+  }
   let { statusCode = 500, message = "Something went wrong" } = err;
   res.status(statusCode).render("error.ejs", { err });
 });

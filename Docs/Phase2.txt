@@ -552,3 +552,15 @@ Login User:
 just make a get and post route in user.js of ru=outes and use password.authenticate() for verification
 (this is having a syntax, use that). and obv we will render login.ejs for this
 
+--------------now we will connect login properly with lisintgs, 
+so that only logged n users can make a listing
+for that we just need to add req.isAuthenticated before 
+redirecting him to the listings page directly
+code: if (!req.isAuthenticated()) {
+        req.flash("error", "You must be logged in to create a listing");
+        return res.redirect("/login");
+      }
+
+now we want this authentication at a lot of places
+so we can either write it again and again or even better,
+create a middleware for it in middleware.js
