@@ -16,17 +16,13 @@ router.param("id", (req, res, next, id) => {
   next();
 });
 
-router
-  .route("/")
-  //index route
-  .get(wrapAsync(listingController.index))
-  //create route
-  .post(isLoggedIn, validateListing, listingController.createListing);
+//index route
+router.get("/", wrapAsync(listingController.index));
 
 //new route
 router.get("/new", isLoggedIn, listingController.renderNewForm);
 
-//needed to it doesnt clash with /listings/:id
+//redirect helper for common signup path typo, needed to it doenst clash with /listings/:id
 router.get("/signup", (req, res) => {
   res.redirect("/signup");
 });
@@ -35,16 +31,19 @@ router.get("/logout", (req, res) => {
   res.redirect("/logout");
 });
 
-router
-  .route("/:id")
-  //show route
-  .get(listingController.showListing)
-  //update route
-  .put(isLoggedIn, isOwner, validateListing, listingController.updateListing)
-  //delete route
-  .delete(isLoggedIn, isOwner, listingController.destroyListing);
+//create route
+router.post("/", isLoggedIn, validateListing, listingController.createListing);
+
+//show route
+router.get("/:id", listingController.showListing);
 
 //Edit route
 router.get("/:id/edit", isLoggedIn, isOwner, listingController.renderEditForm);
+
+//update route
+router.put("/:id", isLoggedIn,isOwner,validateListing, listingController.updateListing);
+
+//delete route
+router.delete("/:id", isLoggedIn, isOwner, listingController.destroyListing);
 
 module.exports = router;
