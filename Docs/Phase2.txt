@@ -578,3 +578,50 @@ but we cant directly access req.user(meaning that we cant directly access
 the the request object f=directly in the ejs template), so we will save
 it first to req.locals and then access them
 
+------------
+now we will add teh functionality to automatically login after signup
+for this we will use the req.login 
+code: 
+just like logout expected a callabck, here we need to pass the user 
+who wants to login and also a callback
+req.login(registeredUser, (err) => {
+      if(err) return next(err);
+      req.flash("success", "Welcome to WanderLust!");
+      res.redirect("/listings");
+    })    
+
+-------------
+now we will impement one more functionality
+when we redirect a user to login while he is trying to add/edit
+then we want to make sure that after login hw comes back to the
+same page
+
+for that we will use the req.originalUrl, which is the 
+originalUrl path present in the request object
+req.session.redirectUrl=req.originalUrl;-> we will save
+the originalUrl in the session, which can be accesses everywhere
+
+router.post("/login", passport.authenticate("local", {failureRedirect: '/login', failureFlash: true}), async (req,res) => {
+    req.flash("success", "Welcome back, you are logged in");
+    // res.redirect("/listings");
+    //instead of listings, we will redirect to teh roginalUrl
+    res.redirect(req.session.redirectUrl);
+}) 
+but the problem with passport is that when we login and it authenticates
+then it resets the compplete sessoin, including the redirectUrl(coz it is also inside the redirect url)
+ 
+so we save it to the locals using a middleware as follows
+
+module.exports.saveRedirectUrl= (Req, res, next) =>{
+    if(req.session.redirectUrl){
+        res.locals.redirectUrl=req.session.redirectUrl;
+    }
+    next();
+}
+
+also, now once we do the above then everything will work fine but not one thing
+when we try to login from the listings page then it will show page not found after authentication
+this happens coz when we directly login then the isLoggedIn middleware is not triggered
+as a result the req.sessions mai koi url save nhi hua, so no path
+
+hence make sure to provide a defualt path of "/listings"
