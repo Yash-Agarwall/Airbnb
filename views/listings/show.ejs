@@ -6,6 +6,7 @@
       <img src="<%= listing.image.url %>" alt="<%= listing.title %>" class="show-hero-image" />
     <% } %>
     <div class="show-hero-content">
+      <p>Onwer: <%= listing.owner.username %></p>
       <p class="show-kicker">Stay Details</p>
       <h1 class="show-title"><%= listing.title %></h1>
       <p class="show-location"><%= listing.location %>, <%= listing.country %></p>

@@ -625,3 +625,14 @@ this happens coz when we directly login then the isLoggedIn middleware is not tr
 as a result the req.sessions mai koi url save nhi hua, so no path
 
 hence make sure to provide a defualt path of "/listings"
+------------------------------------
+AUTHORIZATION:
+
+Now moving to listing owner: jisne listings banayi hai wahi delete kar sakta hai
+so first we add an owner option in the listing schema, 
+then we have two options, either add a owner id to each object of the data in init/data.js
+or second is go to index.sj(which is used to initialize database)
+and use a map funciton as follows which adds owner to each entry
+initData.data = initData.data.map((obj) => ({...obj, owner:"69e3077a8bd1f43256b05d0a"}))
+
+then do node index.js and check in mongosh, usng db.lsiitngs.find(), now every entry is having a woner
