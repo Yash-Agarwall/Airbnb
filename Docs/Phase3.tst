@@ -16,3 +16,5 @@ module.exports.index = async (req, res) => {
 //bascially we have shifted the code into a funciton named index
 router.get("/", wrapAsync(listingController.index));
 router.get("/", wrapAsync(.index));
+
+in resume mention that you have implemented a full stack project using the MVC framework
