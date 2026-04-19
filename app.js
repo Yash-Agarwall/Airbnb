@@ -70,12 +70,12 @@ app.use((req, res, next) => {
   res.locals.error = req.flash("error");
   next();
 });
-app.get("/demouser", async (req, res) => {
-  let fakeUser = new User({
-    email: "stu@af",
-    username: "sfgs", //not that the user schema deosnt have username but this will be handled by passport ig
-  });
-});
+// app.get("/demouser", async (req, res) => {
+//   let fakeUser = new User({
+//     email: "stu@af",
+//     username: "sfgs", //not that the user schema deosnt have username but this will be handled by passport ig
+//   });
+// });
 
 app.use("/listings", listingsRouter);
 app.use("/listings/:id/reviews", reviewsRouter);

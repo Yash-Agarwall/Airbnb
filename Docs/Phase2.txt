@@ -564,3 +564,6 @@ code: if (!req.isAuthenticated()) {
 now we want this authentication at a lot of places
 so we can either write it again and again or even better,
 create a middleware for it in middleware.js
+
+-------------------
+logout user: req.logout()-> exists in passport

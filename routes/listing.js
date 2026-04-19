@@ -42,6 +42,10 @@ router.get("/new",isLoggedIn, (req, res) => {
 router.get("/signup", (req, res) => {
   res.redirect("/signup");
 });
+//needed so that /logout doesnt overlap with /:id
+router.get("/logout", (req, res) => {
+  res.redirect("/logout");
+});
 
 //create route
 router.post(
