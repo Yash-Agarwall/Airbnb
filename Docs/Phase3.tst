@@ -121,3 +121,12 @@ module.exports.renderEditForm = wrapAsync(async (req, res) => {
   <img src="<%= originalImageUrl %>">
 </div>
 
+--------------------------
+i have skipped the map part
+--------------------------
+
+now we are adding the filter bar frontend only(to build the backne dwe ca add a cateorry
+option in listnig scema)
+
+//diaply: none , neither visible nor occupies space
+visibility: hidden, space occupied but not visible
