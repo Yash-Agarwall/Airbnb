@@ -92,3 +92,32 @@ if (req.file) {
       filename: req.file.public_id,
       url: req.file.secure_url || req.file.url,
     };
+
+Now we are working on uploading the image while edit a listing
+it is simple, just update enctype of the edit.ejs fomr to multipart
+then in the routes, add a upload.single option, then in the controller
+make a new listing and update its image using url from the req object and then 
+do find by id and update the org listing
+
+
+now to show preview of image we can do the following:
+ <div class="mb-3">
+    <img src="<%= listing.image.url %>">
+  </div>
+
+but this is not a good way, we should decrease the pixel size whiule previewing
+module.exports.renderEditForm = wrapAsync(async (req, res) => {
+  let { id } = req.params;
+  const listing = await Listing.findById(id);
+  if (!listing) {
+    req.flash("error", "Listing you requested for does not exist");
+    return res.redirect("/listings");
+  }
+  let originalImageUrl = listing.image.url;
+  originalImageUrl = originalImageUrl.replace("/upload", "/upload/w_250");
+  res.render("listings/edit", { listing, originalImageUrl });
+});
+<div class="mb-3">
+  <img src="<%= originalImageUrl %>">
+</div>
+
