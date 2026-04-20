@@ -60,7 +60,14 @@ module.exports.updateListing = wrapAsync(async (req, res) => {
     req.flash("error", "Listing you requested for does not exist");
     return res.redirect("/listings");
   }
-  await Listing.findByIdAndUpdate(id, { ...req.body.listing });
+  const updatedListing = { ...req.body.listing };
+  if (req.file) {
+    updatedListing.image = {
+      filename: req.file.public_id,
+      url: req.file.secure_url || req.file.url,
+    };
+  }
+  await Listing.findByIdAndUpdate(id, updatedListing);
   res.redirect(`/listings/${id}`);
 });
 
