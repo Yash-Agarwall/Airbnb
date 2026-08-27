@@ -1,13 +1,13 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: import.meta.env.MODE === "production"
-  ? `${import.meta.env.VITE_BACKEND_URL}/api`
-    : "http://localhost:8000/api",
+  baseURL:
+    import.meta.env.MODE === "production"
+      ? import.meta.env.VITE_API_URL
+      : "http://localhost:8000/api",
   withCredentials: true,
   timeout: 30000,
 });
-
 
 API.interceptors.response.use(null, async (error) => {
   const { config, message } = error;
@@ -15,12 +15,18 @@ API.interceptors.response.use(null, async (error) => {
     config.retry = 0;
   }
 
-
-  if (config.retry < 3 && (message === "Network Error" || error.code === "ECONNABORTED" || error.response?.status >= 500)) {
+  if (
+    config.retry < 3 &&
+    (message === "Network Error" ||
+      error.code === "ECONNABORTED" ||
+      error.response?.status >= 500)
+  ) {
     config.retry += 1;
     console.log(`Retrying request... (${config.retry}/3)`);
 
-    const backoff = new Promise(resolve => setTimeout(resolve, 1000 * config.retry));
+    const backoff = new Promise((resolve) =>
+      setTimeout(resolve, 1000 * config.retry),
+    );
     await backoff;
 
     return API(config);
